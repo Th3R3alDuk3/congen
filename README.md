@@ -1,2 +1,2 @@
-# congen
+# ConGen
 wikipedia based context generator

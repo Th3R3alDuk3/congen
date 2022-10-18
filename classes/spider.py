@@ -5,7 +5,7 @@ class Spider(scrapy.Spider):
 
     # https://wiki.kiwix.org/wiki/OPDS
 
-    name = "wikipedia"
+    name = "spiki"
 
     def __init__(self, languages: list, search_words: list):
 
@@ -38,11 +38,8 @@ class Spider(scrapy.Spider):
             )
 
     def parse(self, response, **kwargs):
-
-        tags = {"h1", "h2", "h3", "h4", "a", "b", "u", "i"}
-
         for div in response.xpath("//div[@id='content']"):
-            for tag in tags:
+            for tag in {"h1", "h2", "h3", "h4", "a", "b", "u", "i"}:
                 for text in div.xpath(f"//{tag}/text()").extract():
                     if text:
-                        print(text)
+                        print(text.strip())
