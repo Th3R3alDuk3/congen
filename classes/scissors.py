@@ -16,7 +16,7 @@ class Scissors:
         self.max_string_length = max_string_length
 
     @staticmethod
-    def prepare(text: str) -> str:
+    def _prepare(text: str) -> str:
 
         # utf-8 encoding
         text = text.encode("utf-8", errors="ignore").decode("utf-8")
@@ -26,7 +26,7 @@ class Scissors:
         return text.strip()
 
     @staticmethod
-    def extract(text: str) -> iter:
+    def _extract(text: str) -> iter:
 
         patterns = [
             # brackets
@@ -44,7 +44,7 @@ class Scissors:
                 yield subtext.strip()
 
     @staticmethod
-    def sanitize(text: str) -> iter:
+    def _sanitize(text: str) -> iter:
 
         text = sub(f"^[{punctuation} ]+", "", text)
         text = sub(f"[{punctuation} ]+$", "", text)
@@ -55,18 +55,18 @@ class Scissors:
 
         yield text
 
-    def threshold(self, text: str) -> str:
+    def _threshold(self, text: str) -> str:
         if self.min_string_length < len(text) < self.max_string_length:
             return text
 
     def process(self, text: str) -> iter:
 
-        text = self.prepare(text)
-        texts = {text, *self.extract(text)}
+        text = self._prepare(text)
+        texts = {text, *self._extract(text)}
 
         step1 = chain(*map(lambda _: _.split(), texts))
-        step2 = chain(*map(self.sanitize, {*texts, *step1}))
-        step3 = map(self.threshold, step2)
+        step2 = chain(*map(self._sanitize, {*texts, *step1}))
+        step3 = map(self._threshold, step2)
 
         for string in set(step3):
             if string and string not in self.strings:
