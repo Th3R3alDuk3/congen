@@ -1,7 +1,13 @@
 # ConGen
 wikipedia based context generator
 
-1. `./kiwix-server wikipedia/*.zim`
+```
+./kiwix-server wikipedia/*.zim
+```
+```
+python3 congen.py -h
+python3 congen.py "Harry Potter" --languages deu
+```
 
 ### kiwix-tools
 The program version used is **v3.3.0**.
