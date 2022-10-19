@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-import logging
 import argparse
 from scrapy.crawler import CrawlerProcess
 from classes.spider import Spider
@@ -8,11 +7,9 @@ from classes.spider import Spider
 
 def main():
 
-    logging.getLogger("scrapy").propagate = False
-
     parser = argparse.ArgumentParser()
     parser.add_argument("search_words", nargs="+")
-    parser.add_argument("-l", "--languages", nargs="+", help="ISO-639-2/T")
+    parser.add_argument("-l", "--languages", nargs="+", help="ISO-639-3")
 
     args = parser.parse_args()
 
