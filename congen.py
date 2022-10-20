@@ -10,7 +10,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("search_strings", nargs="+")
     parser.add_argument("-l", "--languages", nargs="+", help="ISO-639-3")
-    parser.add_argument("--max_pages", type=int, default=300)
+    parser.add_argument("--max_links", type=int, default=300)
     parser.add_argument("--min_string_length", type=int, default=3)
     parser.add_argument("--max_string_length", type=int, default=20)
 
