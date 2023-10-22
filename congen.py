@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
 import argparse
-from scrapy.crawler import CrawlerProcess
-from classes.spider import Spiwix
+from classes.ner import NER
+from classes.zim import ZIM
 
 
 def main():
@@ -15,11 +15,16 @@ def main():
     parser.add_argument("--max_string_length", type=int, default=20)
 
     args = parser.parse_args()
+    
+    #
 
-    process = CrawlerProcess()
-    # TODO: require -> search_strings, languages, max_pages, min_string_length, max_string_length
-    process.crawl(Spiwix, **vars(args))
-    process.start()
+    zim = ZIM("wikipedia/wikipedia_en_all_nopic_2023-09.zim")    
+    entries = zim.search_entries(args.search_strings)
+
+    #
+    
+    ner = NER("en_core_web_sm")
+    ner.recognize_entities(entries, ["PERSON"])
 
 
 if __name__ == "__main__":
