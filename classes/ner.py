@@ -1,8 +1,8 @@
-from collections import defaultdict
 from sys import stderr
 from bs4 import BeautifulSoup
 from spacy import load
 from typing import Generator, List
+from collections import defaultdict
 
 
 class NER:
@@ -13,13 +13,10 @@ class NER:
         self.nlp = load(ner_file)
 
     def recognize_entities(self, entries: Generator, labels: List[str]):
-
-        length = 0
                 
         for index, entry in enumerate(entries):
             
-            length = max(length, len(entry.path))
-            print(f"\r[{index}] {entry.path:{length}}", end="", file=stderr)
+            print(f"{index} {entry.path}", file=stderr)
 
             item = entry.get_item()
             html = bytes(item.content)

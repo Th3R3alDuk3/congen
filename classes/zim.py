@@ -34,5 +34,3 @@ class ZIM:
                 
                 self.blacklist.add(entry.path)
                 yield entry
-
-    
