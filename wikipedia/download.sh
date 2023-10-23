@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+/ADV#!/usr/bin/bash
 
 languages="de en fr"
 

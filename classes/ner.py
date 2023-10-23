@@ -1,29 +1,22 @@
-from sys import stderr
 from bs4 import BeautifulSoup
 from spacy import load
-from typing import Generator, List
-from collections import defaultdict
+from spacy.tokens import Doc
 
 
 class NER:
 
-    entities = defaultdict(set)
+    _nlp = None
 
-    def __init__(self, ner_file: str):
-        self.nlp = load(ner_file)
+    @classmethod
+    def load(cls, nlp_path: str):
+        cls._nlp = load(nlp_path)
 
-    def recognize_entities(self, entries: Generator, labels: List[str]):
-                
-        for index, entry in enumerate(entries):
-            
-            print(f"{index} {entry.path}", file=stderr)
+    @classmethod
+    def predict(cls, content: bytes) -> Doc:
 
-            item = entry.get_item()
-            html = bytes(item.content)
+        assert cls._nlp
+        
+        soup = BeautifulSoup(content, "html.parser")
+        text = soup.get_text(separator=" ", strip=True)
 
-            soup = BeautifulSoup(html, "html.parser")
-            text = soup.get_text()
-
-            doc = self.nlp(text)
-            for entity in doc.ents:
-                self.entities[entity.label_].add(entity.text)
+        return cls._nlp(text)
